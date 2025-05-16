@@ -2,7 +2,7 @@
 import React from "react";
 import StatusCard from "./StatusCard";
 import { Card } from "@/components/ui/card";
-import { Phone, CheckCircle2, AlertTriangle, Clock, FileUp } from "lucide-react";
+import { Phone, CheckCircle2, AlertTriangle, Clock, FileUp, FileText } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 interface DashboardProps {

@@ -46,9 +46,12 @@ const StatusCard: React.FC<StatusCardProps> = ({
         
         {total && (
           <div className="mt-4">
-            <Progress value={percentage} 
+            <Progress 
+              value={percentage} 
               className="h-1.5" 
-              indicatorClassName={`bg-gradient-to-r from-${color.replace('#', '')} to-${color.replace('#', '')}`}
+              // Using standard className to style the indicator instead of indicatorClassName
+              className="h-1.5 [&>div]:bg-gradient-to-r [&>div]:from-current [&>div]:to-current"
+              style={{ '--tw-text-opacity': 1, color: color }}
             />
             <p className="text-xs text-gray-500 mt-1 text-right">{percentage.toFixed(0)}%</p>
           </div>
