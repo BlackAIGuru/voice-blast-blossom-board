@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { 
@@ -30,7 +30,15 @@ interface Template {
   isDefault?: boolean;
 }
 
-const TemplateManager = () => {
+interface TemplateManagerProps {
+  selectedTemplate: Template | null;
+  onTemplateSelected: (template: Template) => void;
+}
+
+const TemplateManager: React.FC<TemplateManagerProps> = ({
+  selectedTemplate,
+  onTemplateSelected
+}) => {
   const [templates, setTemplates] = useState<Template[]>([
     {
       id: "1",
@@ -53,7 +61,6 @@ const TemplateManager = () => {
     }
   ]);
   
-  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", content: "" });
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -112,7 +119,11 @@ const TemplateManager = () => {
   };
 
   const handleSelectTemplate = (template: Template) => {
-    setSelectedTemplate(template);
+    onTemplateSelected(template);
+    toast({
+      title: "Template Selected",
+      description: `Template "${template.name}" has been selected for broadcasting`
+    });
   };
   
   const formatDate = (date: Date) => {
@@ -183,9 +194,17 @@ const TemplateManager = () => {
                   {template.content}
                 </p>
                 
-                <div className="flex items-center text-xs text-gray-500">
-                  <Clock className="h-3 w-3 mr-1" />
-                  Created on {formatDate(template.createdAt)}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center text-xs text-gray-500">
+                    <Clock className="h-3 w-3 mr-1" />
+                    Created on {formatDate(template.createdAt)}
+                  </div>
+                  
+                  {selectedTemplate?.id === template.id && (
+                    <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                      Selected
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -218,6 +237,12 @@ const TemplateManager = () => {
                         Default
                       </span>
                     </div>
+                    
+                    {selectedTemplate?.id === template.id && (
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                        Selected
+                      </span>
+                    )}
                   </div>
                   
                   <p className="text-sm text-gray-600">

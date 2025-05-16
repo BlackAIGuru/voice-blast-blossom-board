@@ -22,6 +22,10 @@ const Index = () => {
     setActiveTab(tab);
   };
 
+  const handleTemplateSelected = (template: any) => {
+    setSelectedTemplate(template);
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
@@ -35,7 +39,7 @@ const Index = () => {
       case "upload":
         return <FileUpload onFileUploaded={handleFileUploaded} />;
       case "templates":
-        return <TemplateManager />;
+        return <TemplateManager onTemplateSelected={handleTemplateSelected} selectedTemplate={selectedTemplate} />;
       case "broadcast":
         return (
           <BroadcastControl
